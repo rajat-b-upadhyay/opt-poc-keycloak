@@ -1,12 +1,9 @@
-package dasniko.customer;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+package optpoc.keycloack.stockservice;
 
 import lombok.Value;
 
 
 //@Value
-//@JsonIgnoreProperties(ignoreUnknown = true)
 class Stock {
 	
 	private Long id;
@@ -14,12 +11,7 @@ class Stock {
     private String unitPrices;
     private String quantity;
     
-    
-    public Stock() {
-		super();
-	}
-
-	public Stock(Long id, String company, String unitPrices, String quantity) {
+    public Stock(Long id, String company, String unitPrices, String quantity) {
 		super();
 		this.id = id;
 		this.company = company;
@@ -53,5 +45,11 @@ class Stock {
 	}
 	
     
-    
+	 @Override
+	    public String toString() {
+	        return "{id=" + id +
+	                ", company=" + company +
+	                ", unitPrices=" + unitPrices +
+	                ", quantity=" + quantity + "}";
+	}
 }

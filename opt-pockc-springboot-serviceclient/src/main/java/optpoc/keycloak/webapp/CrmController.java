@@ -1,13 +1,16 @@
-package dasniko.customer;
+package optpoc.keycloak.webapp;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
-import org.keycloak.KeycloakPrincipal;
+import javax.servlet.http.HttpServletRequest;
+
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,15 +20,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.Arrays;
-import java.util.List;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
@@ -40,10 +39,6 @@ public class CrmController {
     @Autowired
     private KeycloakSecurityContext keycloakSecurityContext;
     
-    /*@Autowired
-    private AccessToken accessToken;*/
-    @Autowired
-    private RestTemplate restTemplate;
     @Autowired
     private KeycloakRestTemplate keycloakRestTemplate;
     
@@ -60,6 +55,12 @@ public class CrmController {
         return "redirect:/";
     }
 
+    /**
+     *  Web End-point, generates the response by its own
+     * @param model
+     * @param currentUser
+     * @return
+     */
     @GetMapping("/customers")
     public String customers(Model model, @AuthenticationPrincipal  Principal currentUser) {
     	log.info("keycloakSecurityContext: " + keycloakSecurityContext);
@@ -86,6 +87,8 @@ public class CrmController {
         model.addAttribute(customerRepository.findAll());
         return "customers";
     }
+    
+    
 
     @GetMapping("/customers/{id}")
     public String customer(@PathVariable("id") Long id, Model model) {
@@ -93,6 +96,13 @@ public class CrmController {
         return "customer";
     }
     
+    
+    /**
+     * 
+     * Calls rest service to fit the response
+     * @param model
+     * @return
+     */
     @GetMapping("/stocks")
     public String stocks(Model model) {
         

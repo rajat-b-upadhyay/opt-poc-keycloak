@@ -1,4 +1,4 @@
-package dasniko.customer;
+package optpoc.keycloak.webapp;
 
 import org.springframework.stereotype.Component;
 

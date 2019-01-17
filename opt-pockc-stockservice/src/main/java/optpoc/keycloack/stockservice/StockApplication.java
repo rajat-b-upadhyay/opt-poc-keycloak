@@ -1,4 +1,4 @@
-package dasniko.authdemo.stock;
+package optpoc.keycloack.stockservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
